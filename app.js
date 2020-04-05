@@ -4,9 +4,13 @@ const bodyParser = require('body-parser');
 const PORT = process.env.port || 3000;
 const db = require('./services/database');
 const router = require('./routes/index');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+db.once('open', function () {
 	console.log('Connected to the database');
 });
 
